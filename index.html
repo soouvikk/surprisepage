@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vutni Birthday</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b8b; /* Soft rose pink */
+            --secondary: #ffb3c1; /* Lighter pink */
+            --accent: #ffd166; /* Warm gold */
+            --dark-text: #ffffff; /* White text for dark backgrounds */
+            --dark-bg: #000000; /* Black background */
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Aurora background effect */
+        .aurora-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                radial-gradient(ellipse at 10% 20%, rgba(0, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%),
+                radial-gradient(ellipse at 90% 80%, rgba(255, 0, 255, 0.4) 0%, rgba(0, 0, 0, 0) 70%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+            background-size: 200% 200%;
+            animation: aurora-animate 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes aurora-animate {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 1.5s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            padding: 15px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 10;
+            background-color: transparent;
+        }
+
+        #scene1 {
+            background-color: transparent;
+            transition: background 1s ease;
+            position: relative;
+        }
+        
+        /* Updated Countdown styles */
+        .countdown-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 70px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 0.8rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            margin: 5px;
+        }
+
+        .countdown-value {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 10vw, 4rem);
+            font-weight: bold;
+            color: var(--dark-text);
+            text-shadow: 0 0 10px var(--primary), 0 0 20px var(--accent);
+            margin-bottom: -8px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .countdown-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(0.7rem, 3vw, 1rem);
+            font-weight: 300;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            opacity: 0;
+            animation: sparkle 2s infinite;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(0.5); opacity: 0; }
+        }
+
+        #scene2 { 
+            background-color: rgba(0, 0, 0, 0.5); 
+            backdrop-filter: blur(5px); 
+        }
+
+        .invitation-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: clamp(15px, 5vw, 30px);
+            max-width: 90%;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: scale(0.85);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            color: var(--dark-text);
+            margin: 20px 0;
+        }
+
+        .invitation-card.active {
+            transform: scale(1);
+            animation: float-card 3s ease-in-out infinite;
+        }
+        
+        .invitation-card:hover { transform: scale(1.02); }
+
+        .invitation-card h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            margin: 10px 0;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(255, 107, 139, 0.5), 0 0 20px rgba(255, 107, 139, 0.3);
+            line-height: 1.2;
+        }
+
+        .invitation-card p {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            line-height: 1.5;
+            margin: clamp(8px, 2vw, 15px) 0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: auto;
+            min-width: 180px;
+        }
+
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
+        .btn:active { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover:after { left: 100%; }
+
+        .photo-container {
+            margin: 10px auto;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 107, 139, 0.5);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-container:hover img { transform: scale(1.1); }
+        
+        .upload-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            transition: background 0.3s ease;
+            color: var(--dark-text);
+        }
+        
+        .upload-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+        #scene3 { 
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+        
+        #scene4 { 
+            background-color: transparent; 
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .cake-container {
+            position: relative;
+            width: clamp(150px, 50vw, 250px);
+            height: clamp(150px, 50vw, 250px);
+            margin: 20px auto;
+        }
+
+        .cake {
+            font-size: clamp(4rem, 15vw, 6rem);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(1.1);
+            z-index: 2;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+        
+        #blow-btn { background: linear-gradient(45deg, #ff9a9e, #fad0c4); }
+
+        .candle {
+            position: absolute;
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            animation: flicker 1s infinite alternate;
+            text-shadow: 0 0 10px gold;
+        }
+
+        .floating-emojis {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: float-up 5s linear infinite;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #fireworks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .firework-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--dark-text);
+            border-radius: 50%;
+            opacity: 0;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        .message-final {
+            background: rgba(255, 255, 255, 0.15);
+            padding: clamp(15px, 5vw, 30px);
+            border-radius: 15px;
+            max-width: 90%;
+            width: 100%;
+            z-index: 20;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s ease forwards;
+            color: var(--dark-text);
+            margin: 20px 0;
+        }
+
+        .message-final h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            margin: 10px 0;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        
+        .message-final p {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            line-height: 1.5;
+            margin: clamp(8px, 2vw, 15px) 0;
+        }
+        
+        .message-final p b {
+            font-weight: 700;
+        }
+
+        .memory-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .memory-item {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .memory-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        .memory-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px gold; }
+            25% { opacity: 0.8; text-shadow: 0 0 15px orange; }
+            50% { opacity: 1; text-shadow: 0 0 10px gold, 0 0 20px orange; }
+            75% { opacity: 0.7; text-shadow: 0 0 5px gold; }
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float-card {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1); }
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--dark-text);
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .navigation-dots {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 0 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--dark-text);
+            transform: scale(1.2);
+            box-shadow: 0 0 8px var(--dark-text);
+        }
+
+        .dot.locked {
+            cursor: not-allowed;
+            opacity: 0.3;
+        }
+
+        /* Music Control Styles */
+        .music-control {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        #musicToggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        #musicToggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .volume-control {
+            width: 70px;
+            height: 5px;
+        }
+
+        /* Custom Modal for Errors */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            color: var(--dark-bg);
+        }
+        
+        .modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .modal-close:hover,
+        .modal-close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .countdown-unit {
+                min-width: 60px;
+                padding: 0.6rem;
+                margin: 3px;
+            }
+            
+            .countdown-value {
+                font-size: clamp(1.8rem, 12vw, 3rem);
+                margin-bottom: -5px;
+            }
+            
+            .countdown-label {
+                font-size: clamp(0.6rem, 3vw, 0.8rem);
+            }
+            
+            .btn {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+                min-width: 160px;
+            }
+            
+            .photo-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .cake-container {
+                width: clamp(120px, 50vw, 200px);
+                height: clamp(120px, 50vw, 200px);
+            }
+            
+            .cake {
+                font-size: clamp(3rem, 15vw, 5rem);
+            }
+            
+            .candle {
+                font-size: clamp(1rem, 5vw, 1.5rem);
+            }
+            
+            .music-control {
+                bottom: 50px;
+                padding: 6px 12px;
+            }
+            
+            #musicToggle {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            
+            .volume-control {
+                width: 60px;
+            }
+            
+            .navigation-dots {
+                bottom: 10px;
+            }
+            
+            .dot {
+                width: 8px;
+                height: 8px;
+                margin: 0 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="birthdayMusic" loop>
+        <source src="../song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="aurora-bg"></div>
+
+    <div class="container">
+        <div class="scene active" id="scene1">
+            <div class="countdown-container">
+                <div class="countdown-unit">
+                    <span id="hours" class="countdown-value">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-unit">
+                    <span id="minutes" class="countdown-value">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-unit">
+                    <span id="seconds" class="countdown-value">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scene" id="scene2">
+            <div class="invitation-card">
+                <div class="photo-container">
+                    <img id="birthday-photo" src="../vutni.jpg" alt="Placeholder Photo">
+                </div>
+                <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                <label for="photo-upload" class="upload-btn">Upload Your Photo</label>
+                <h1>Happy Birthday Vutni!</h1>
+                <p>On this special day, I've created something just for you.</p>
+                <p>Ready to begin this special celebration?</p>
+                <button class="btn" id="begin-btn">Begin Celebration</button>
+            </div>
+        </div>
+
+        <div class="scene" id="scene3">
+            <h1>Make a Wish!</h1>
+            <div class="cake-container">
+                <div class="cake">🎂</div>
+                <div class="candle">🕯️</div>
+            </div>
+            <p>Blow out the candle to make your wish</p>
+            <button class="btn" id="blow-btn">Blow the Candle</button>
+        </div>
+
+        <div class="scene" id="scene4">
+            <div class="message-final">
+                <h1>Happy Birthday, Vutni!</h1>
+                <p>Thank you for being a <b>pasandida aurat</b>. No matter what happens or how life changes, I will always be with you in every situation.</p>
+                <p>You have brought so much happiness and love into my life. I pray your year is filled with even more joy. I love you so much, more than words can ever explain.
+
+</p>
+                </div>
+            <div id="fireworks-container"></div>
+        </div>
+
+        <div class="music-control">
+            <button id="musicToggle" aria-label="Play Music">▶️ Play Music</button>
+            <input type="range" id="volumeControl" class="volume-control" min="0" max="1" step="0.1" value="0.7">
+        </div>
+
+        <div class="navigation-dots">
+            <div class="dot active" data-scene="scene1"></div>
+            <div class="dot locked" data-scene="scene2"></div>
+            <div class="dot locked" data-scene="scene3"></div>
+            <div class="dot locked" data-scene="scene4"></div>
+        </div>
+    </div>
+    
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <p>Audio playback failed. Please click "Play Music" to enable it.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Audio functionality
+            const music = document.getElementById('birthdayMusic');
+            const musicToggle = document.getElementById('musicToggle');
+            const volumeControl = document.getElementById('volumeControl');
+            let isMusicPlaying = false;
+            
+            // Error Modal elements
+            const errorModal = document.getElementById('errorModal');
+            const closeModalBtn = document.querySelector('.modal-close');
+            
+            function showModal() {
+                errorModal.style.display = 'flex';
+            }
+            
+            function closeModal() {
+                errorModal.style.display = 'none';
+            }
+            
+            closeModalBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (e) => {
+                if (e.target === errorModal) {
+                    closeModal();
+                }
+            });
+
+            music.volume = 0.7;
+
+            // Music toggle button - UPDATED FOR ICONS
+            musicToggle.addEventListener('click', () => {
+                if (isMusicPlaying) {
+                    music.pause();
+                    musicToggle.innerHTML = '▶️ Play Music';
+                    musicToggle.setAttribute('aria-label', 'Play Music');
+                } else {
+                    music.play()
+                        .then(() => {
+                            musicToggle.innerHTML = '⏸️ Pause Music';
+                            musicToggle.setAttribute('aria-label', 'Pause Music');
+                        })
+                        .catch(error => {
+                            console.error('Audio playback failed:', error);
+                            musicToggle.innerHTML = '❌ Playback Error';
+                            musicToggle.setAttribute('aria-label', 'Playback Error');
+                            showModal();
+                        });
+                }
+                isMusicPlaying = !isMusicPlaying;
+            });
+
+            // Volume control
+            volumeControl.addEventListener('input', (e) => {
+                music.volume = e.target.value;
+            });
+            
+            // Try to autoplay on initial interaction
+            document.body.addEventListener('click', () => {
+                if (!isMusicPlaying) {
+                    music.play()
+                        .then(() => {
+                            isMusicPlaying = true;
+                            musicToggle.innerHTML = '⏸️ Pause Music';
+                            musicToggle.setAttribute('aria-label', 'Pause Music');
+                        })
+                        .catch(error => {
+                            console.log('Autoplay prevented - user must manually play.');
+                        });
+                }
+            }, { once: true });
+
+            // Original birthday page functionality
+            function createTwinklingStars(count) {
+                const container = document.querySelector('.aurora-bg');
+                for (let i = 0; i < count; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    star.style.left = `${Math.random() * 100}vw`;
+                    star.style.top = `${Math.random() * 100}vh`;
+                    star.style.animationDelay = `${Math.random() * 2}s`;
+                    star.style.width = `${Math.random() * 3 + 1}px`;
+                    star.style.height = star.style.width;
+                    container.appendChild(star);
+                }
+            }
+
+            createTwinklingStars(200);
+            
+            const scenes = document.querySelectorAll('.scene');
+            const dots = document.querySelectorAll('.dot');
+            let currentScene = 0;
+            let countdownInterval;
+            let countdownFinished = false;
+
+            function changeScene(index) {
+                if (!countdownFinished && index !== 0) {
+                    return;
+                }
+                
+                scenes[currentScene].classList.remove('active');
+                dots[currentScene].classList.remove('active');
+                
+                currentScene = index;
+                
+                scenes[currentScene].classList.add('active');
+                dots[currentScene].classList.add('active');
+                
+                if (currentScene === 1) {
+                    document.querySelector('.invitation-card').classList.add('active');
+                } else if (currentScene === 2) {
+                    createHearts();
+                } else if (currentScene === 3) {
+                    startFireworks();
+                }
+            }
+            
+            startCountdown();
+
+            function startCountdown() {
+                const countdownHours = document.getElementById('hours');
+                const countdownMinutes = document.getElementById('minutes');
+                const countdownSeconds = document.getElementById('seconds');
+                
+                document.querySelectorAll('.countdown-value, .countdown-label, .countdown-unit').forEach(el => {
+                    el.style.opacity = '1';
+                });
+                
+                const targetTime = Date.now() + 5000;
+
+                countdownInterval = setInterval(() => {
+                    const distance = targetTime - new Date().getTime();
+
+                    if (distance < 0) {
+                        clearInterval(countdownInterval);
+                        countdownFinished = true;
+                        dots.forEach(dot => dot.classList.remove('locked'));
+                        setTimeout(() => changeScene(1), 1000);
+                        return;
+                    }
+
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    countdownHours.textContent = '00';
+                    countdownMinutes.textContent = '00';
+                    countdownSeconds.textContent = seconds.toString().padStart(2, '0');
+
+                }, 1000);
+            }
+
+            document.getElementById('begin-btn').addEventListener('click', () => {
+                changeScene(2);
+            });
+            
+            document.getElementById('blow-btn').addEventListener('click', () => {
+                document.querySelector('.candle').style.display = 'none';
+                document.querySelector('.cake').textContent = '✨';
+                document.querySelector('.cake').style.transform = 'translate(-50%, -50%) scale(1.5)';
+                
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        const spark = document.createElement('div');
+                        spark.classList.add('floating-emojis');
+                        spark.innerHTML = ['✨', '🌟', '💫', '⭐'][Math.floor(Math.random() * 4)];
+                        spark.style.left = '50%';
+                        spark.style.top = '50%';
+                        spark.style.fontSize = `${Math.random() * 15 + 10}px`;
+                        spark.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                        document.getElementById('scene3').appendChild(spark);
+                        
+                        setTimeout(() => {
+                            spark.remove();
+                        }, 5000);
+                    }, i * 100);
+                }
+                
+                setTimeout(() => changeScene(3), 2000);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    if (!countdownFinished && index !== 0) {
+                        return;
+                    }
+                    
+                    if (countdownInterval && index !== 0) {
+                        clearInterval(countdownInterval);
+                        countdownFinished = true;
+                        dots.forEach(d => d.classList.remove('locked'));
+                    }
+                    changeScene(index);
+                });
+            });
+
+            document.getElementById('photo-upload').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('birthday-photo').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            function createHearts() {
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.classList.add('floating-emojis');
+                        const hearts = ['💖', '✨', '❤️', '💕', '💫'];
+                        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                        heart.style.left = `${Math.random() * 100}vw`;
+                        heart.style.top = `${100 + Math.random() * 50}vh`;
+                        heart.style.fontSize = `${Math.random() * 15 + 10}px`;
+                        heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
+                        document.getElementById('scene3').appendChild(heart);
+                        
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 5000);
+                    }, i * 300);
+                }
+            }
+
+            let particles = [];
+            let animationFrameId;
+
+            function startFireworks() {
+                particles = [];
+                cancelAnimationFrame(animationFrameId);
+
+                createFireworkAt(window.innerWidth/2, window.innerHeight/3);
+                createFireworkAt(window.innerWidth/3, window.innerHeight/2);
+                createFireworkAt(window.innerWidth*2/3, window.innerHeight/2);
+
+                setInterval(() => {
+                    createFirework();
+                }, 800);
+
+                animateFireworks();
+            }
+
+            function createFireworkAt(x, y) {
+                const color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                
+                const particleCount = 50 + Math.random() * 50;
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = Math.random() * 2 * Math.PI;
+                    const velocity = Math.random() * 10 + 5;
+                    
+                    particles.push({
+                        x: x,
+                        y: y,
+                        vx: Math.cos(angle) * velocity,
+                        vy: Math.sin(angle) * velocity,
+                        color: color,
+                        opacity: 1,
+                        element: createFireworkParticleElement(x, y, color)
+                    });
+                }
+            }
+
+            function createFirework() {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight * 0.6;
+                createFireworkAt(x, y);
+            }
+
+            function createFireworkParticleElement(x, y, color) {
+                const particle = document.createElement('div');
+                particle.classList.add('firework-particle');
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.backgroundColor = color;
+                particle.style.boxShadow = `0 0 5px 2px ${color}`;
+                document.getElementById('fireworks-container').appendChild(particle);
+                return particle;
+            }
+
+            function animateFireworks() {
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.2;
+                    p.opacity -= 0.01;
+
+                    p.element.style.left = `${p.x}px`;
+                    p.element.style.top = `${p.y}px`;
+                    p.element.style.opacity = p.opacity;
+
+                    if (p.opacity <= 0) {
+                        p.element.remove();
+                        particles.splice(i, 1);
+                    }
+                }
+                animationFrameId = requestAnimationFrame(animateFireworks);
+            }
+        });
+    </script>
+</body>
+</html>
